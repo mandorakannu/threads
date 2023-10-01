@@ -1,9 +1,9 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Outfit } from "next/font/google";
+import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
-
-const outfit = Outfit({ subsets: ["latin"] });
+import { Providers } from "@ui/ChakraProvider";
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Threads - Next.js | Kannu Mandora | Full Stack Developer",
@@ -19,7 +19,9 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={outfit.className}>{children}</body>
+        <body className={inter.className}>
+          <Providers>{children}</Providers>
+        </body>
       </html>
     </ClerkProvider>
   );
