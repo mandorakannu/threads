@@ -1,0 +1,7 @@
+[
+  { "name": "Home", "link": "/" },
+  { "name": "About", "link": "/about" },
+  { "name": "Sign In | Sign Up", "link": "/sign-up" },
+  { "name": "Contact", "link": "/contact" },
+  { "name": "My Blogs", "link": "https://www.mandorakannu.me" }
+]

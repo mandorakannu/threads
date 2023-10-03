@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Providers as ChakraProvider } from "@ui/ChakraProvider";
+import { Navigation } from "@shared_ui/navigation/Navbar";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -21,6 +22,7 @@ export default function RootLayout({
       <html lang="en">
         <body className={inter.className}>
           <ChakraProvider>
+            <Navigation />
             {children}
             </ChakraProvider>
         </body>
