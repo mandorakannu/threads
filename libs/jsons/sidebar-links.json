@@ -1,0 +1,7 @@
+[
+  { "name": "Home", "link": "/", "image": 0 },
+  { "name": "Search", "link": "/search", "image": 1 },
+  { "name": "Activity", "link": "/activity", "image": 2 },
+  { "name": "Create Threads", "link": "/new-thread", "image": 3 },
+  { "name": "Profile", "link": "/profile", "image": 4 }
+]

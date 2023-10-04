@@ -15,7 +15,7 @@ function Navbar() {
   return (
     <>
       {!protectedRoutes.includes(path) ? (
-        <header className="border-b-2 bg-secondary-300 text-white">
+        <header className="border-b-2 bg-secondary-300 text-white fixed top-0 z-30 w-full px-6">
           <nav className="flex-row-between px-10 py-3">
             <section className="flex-row-between gap-10">
               <Image src={logo} alt="logo" />
