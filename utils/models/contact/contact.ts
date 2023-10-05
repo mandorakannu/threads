@@ -1,11 +1,11 @@
-import { Schema, model } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 const clientSchema = new Schema({
   email: {
     type: String,
     required: true,
   },
-  subject: {
+  name: {
     type: String,
     required: true,
   },
@@ -19,5 +19,4 @@ const clientSchema = new Schema({
   },
 });
 
-const clients = model("client", clientSchema);
-export default clients;
+export default mongoose.models?.client || mongoose.model("client", clientSchema);
