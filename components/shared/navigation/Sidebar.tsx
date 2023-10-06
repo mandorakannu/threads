@@ -1,15 +1,18 @@
 "use client";
 import { memo } from "react";
-import { home, search, heart, user, create } from "@shared_ui/Images";
+import { home, search, heart, user, create, logout } from "@shared_ui/Images";
 import Image from "next/image";
 import sidebarLink from "@jsons/sidebar-links.json";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useProtectRoutes } from "@hooks/useProtectRoutes";
+import { useAuth, SignOutButton, SignedIn } from "@clerk/nextjs";
 function SidebarNavigation() {
   const images = [home, search, heart, create, user];
   const pathname = usePathname();
   const protectRoutes = useProtectRoutes();
+  const { userId } = useAuth();
+  const router = useRouter();
   return (
     <>
       {!protectRoutes.includes(pathname) && (
@@ -38,6 +41,17 @@ function SidebarNavigation() {
                 </Link>
               );
             })}
+            {userId && (
+              <SignedIn>
+                <SignOutButton signOutCallback={() => router.push("/sign-in")}>
+                  <div className="flex cursor-pointer gap-4 p-4  bg-secondary-50 hover:bg-secondary-100 transition-colors delay-75 ease-in-out rounded">
+                    <Image src={logout} alt="logout" width={24} height={24} />
+
+                    <p className="text-light-2 max-lg:hidden">Log Out</p>
+                  </div>
+                </SignOutButton>
+              </SignedIn>
+            )}
           </aside>
         </section>
       )}
