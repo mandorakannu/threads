@@ -26,9 +26,9 @@ export default function RootLayout({
             <Navigation />
             <div className="flex flex-row">
               <Sidebar />
-              <section className="flex min-h-screen flex-1 flex-col items-center pb-10 pt-28 max-md:pb-32 bg-secondary-200 text-white">
+              <div className="flex min-h-screen flex-1 flex-col items-center pb-10 pt-28 max-md:pb-32 bg-secondary-200 text-white">
                 <div className="w-full max-w-7xl px-4">{children}</div>
-              </section>
+              </div>
             </div>
           </ChakraProvider>
         </body>
