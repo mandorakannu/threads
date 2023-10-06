@@ -4,7 +4,7 @@ import axios from "axios";
 import Link from "next/link";
 import Loader from "@ui/Loader";
 import React, { useState, useRef } from "react";
-import { AlertModel } from "@pages/contact/Model";
+import { AlertModel } from "@shared_ui/Model";
 
 function Contact() {
   const nameRef = useRef<HTMLInputElement>(null);
