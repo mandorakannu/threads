@@ -30,7 +30,7 @@ export default async function AllUserThreads() {
         return threads.map((thread: string, index: number) => (
           <div
             key={index}
-            className="flex-row-center gap-5 bg-secondary-100 py-5 px-6 rounded-md my-10"
+            className="flex-row-center gap-5 bg-secondary-100 py-5 px-6 rounded-md mb-10"
           >
             <Image
               src={imageLink}
