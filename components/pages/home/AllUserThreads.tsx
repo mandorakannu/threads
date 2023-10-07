@@ -7,7 +7,7 @@ export default function AllUserThreads() {
   const [threads, setThreads] = useState([]);
   const getUsers = async () => {
     try {
-      const allThreads = await axios.get("api/threads/getAllThreads");
+      const allThreads = await axios.get("/api/threads/getAllThreads");
       setThreads(allThreads.data);
     } catch (error: unknown) {
       console.log(error);
