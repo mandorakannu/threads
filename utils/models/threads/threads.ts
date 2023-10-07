@@ -13,6 +13,10 @@ const newThreads = new Schema({
     type: String,
     required: true,
   },
+  imageLink: {
+    type: String,
+    required: true,
+  },
   date: {
     type: Date,
     default: Date.now,

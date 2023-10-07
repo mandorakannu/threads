@@ -1,32 +1,46 @@
-"use client";
-import axios from "axios";
+import Link from "next/link";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import newThreads from "@models/threads/threads";
+import { connectToDatabase } from "@database/connection";
 
-export default function AllUserThreads() {
-  const [threads, setThreads] = useState([]);
-  const getUsers = async () => {
-    try {
-      const allThreads = await axios.get("/api/threads/getAllThreads");
-      setThreads(allThreads.data);
-    } catch (error: unknown) {
-      console.log(error);
-    }
-  };
-  useEffect(() => {
-    getUsers();
-  }, []);
+interface IThread {
+  _id: string;
+  username: string;
+  thread: string;
+  imageLink: string;
+}
+export const revalidate = 10;
+
+const getUsers = async () => {
+  try {
+    await connectToDatabase();
+    const allThreads = await newThreads.find({});
+    if (!allThreads) return [];
+    return allThreads;
+  } catch (error: unknown) {
+    console.log(error);
+  }
+};
+
+export default async function AllUserThreads() {
+  const threads = (await getUsers()) as IThread[];
   return (
     <>
-      {threads.map(({ name, thread, imageLink }, index) => (
+      {threads.map(({ username, thread, imageLink }, index: number) => (
         <div
           key={index}
           className="flex-row-center gap-5 bg-secondary-100 py-5 px-6 rounded-md my-10"
         >
-          <Image src={imageLink} alt="User Image" className="w-12 h-12" />
+          <Image
+            src={imageLink}
+            alt="User Image"
+            width={48}
+            height={48}
+            className="w-12 h-12 rounded-full"
+          />
           <div className="flex flex-col justify-start">
-            <span>{name}</span>
-            <span>{thread}</span>
+            <Link href={`/user/${username}`}>@{username}</Link>
+            <span className="text-sm">{thread}</span>
           </div>
         </div>
       ))}
