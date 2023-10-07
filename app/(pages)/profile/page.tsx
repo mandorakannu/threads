@@ -3,7 +3,14 @@ import Image from "next/image";
 import edit from "@images/edit.svg";
 import { currentUser } from "@clerk/nextjs";
 import type { User } from "@clerk/nextjs/api";
+import { Metadata } from "next";
 
+export const metadata: Metadata = {
+  title: "User profile | Threads | Kannu Mandora",
+  description:
+    "This is the user profile page. It shows the user's profile. This thread clone is made by Kannu Mandora. Kannu Mandora is a full stack developer.",
+  keywords: "profile, user, clerk, nextjs, kannu, mandora",
+};
 // todo Create a bio field in Clerk. {Important}
 
 export default async function UserProfile() {
