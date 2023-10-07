@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import newThreads from "@models/threads/threads";
 import { connectToDatabase } from "@database/connection";
+import { cache } from "react";
 
 interface IThread {
   _id: string;
@@ -9,9 +10,9 @@ interface IThread {
   threads: Array<string>;
   imageLink: string;
 }
-export const revalidate = 10;
+export const revalidate = 5;
 
-const getUsers = async () => {
+const getUsers = cache(async () => {
   try {
     await connectToDatabase();
     const allThreads = await newThreads.find({});
@@ -20,7 +21,7 @@ const getUsers = async () => {
   } catch (error: unknown) {
     console.log(error);
   }
-};
+});
 
 export default async function AllUserThreads() {
   const threads = (await getUsers()) as IThread[];
