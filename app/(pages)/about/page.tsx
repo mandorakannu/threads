@@ -2,10 +2,19 @@ import Link from "next/link";
 import React from "react";
 import { Outfit } from "next/font/google";
 import Image from "next/image";
+import { Metadata } from "next";
 const font = Outfit({
   weight: ["400", "500", "700"],
   subsets: ["latin-ext"],
 });
+
+export const metadata: Metadata = {
+  title: "About Page | Threads | Kannu Mandora",
+  description:
+    "This is the about page of the Threads app. This page is created by Kannu Mandora. This page is created using Next.js and Tailwind CSS. It is a full stack application. It is a simple application where you can create threads and comment on them.",
+  keywords: "profile, user, clerk, nextjs, kannu, mandora",
+};
+
 function About() {
   const url = process.env.ABOUT_PROFILE_IMAGE_URL;
   if (!url) throw new Error("About page Profile image url not found");
