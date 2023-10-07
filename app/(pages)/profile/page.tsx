@@ -18,7 +18,7 @@ export default async function UserProfile() {
               alt=""
               width={80}
               height={80}
-              className="rounded-full"
+              className="rounded-full w-20 h-20"
             />
             <div className="flex flex-col items-start">
               <h1>
