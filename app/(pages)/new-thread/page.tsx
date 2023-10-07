@@ -27,7 +27,7 @@ export default function CreateThread() {
           isOpen: true,
         });
       }
-      const response = await axios.post("/api/create-thread", content);
+      const response = await axios.post("/api/threads/create-thread", content);
       if (response.status === 201) {
         setData({
           title: "Success",
