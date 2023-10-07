@@ -9,8 +9,8 @@ const newThreads = new Schema({
     type: String,
     required: true,
   },
-  thread: {
-    type: String,
+  threads: {
+    type: Array,
     required: true,
   },
   imageLink: {

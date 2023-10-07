@@ -20,17 +20,28 @@ export async function POST(request: NextRequest, response: NextResponse) {
         { status: 400 }
       );
     await connectToDatabase();
-    await threads.create({
-      username,
-      email,
-      thread: content,
-      imageLink: imageUrl,
-    });
-    disconnectFromDatabase();
-    return NextResponse.json(
-      { message: "New thread created." },
-      { status: 201 }
-    );
+    const isUser = await threads.findOne({ email });
+    console.log(isUser);
+    if (!isUser) {
+      await threads.create({
+        username,
+        email,
+        threads: content,
+        imageLink: imageUrl,
+      });
+      disconnectFromDatabase();
+      return NextResponse.json(
+        { message: "New thread created." },
+        { status: 201 }
+      );
+    } else {
+      await threads.updateOne({ email }, { $push: { threads: content } });
+      disconnectFromDatabase();
+      return NextResponse.json(
+        { message: "New thread Updated." },
+        { status: 201 }
+      );
+    }
   } catch (error) {
     return NextResponse.json(
       { message: "Internal server error.", error },
