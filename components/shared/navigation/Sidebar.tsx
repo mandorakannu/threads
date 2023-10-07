@@ -15,7 +15,7 @@ function SidebarNavigation() {
   const router = useRouter();
   return (
     <>
-      {!protectRoutes.includes(pathname) && (
+      {!protectRoutes.includes(pathname) && userId && (
         <section className="sticky left-0 top-0 z-20 flex-col-between h-screen w-fit overflow-auto border-r pb-5 pt-28 max-md:hidden bg-secondary-300 text-white">
           <aside className="flex w-full flex-1 flex-col gap-6 px-6">
             {sidebarLink.map(({ name, link, image }) => {
