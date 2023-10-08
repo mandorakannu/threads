@@ -2,9 +2,10 @@ import {
   connectToDatabase,
   disconnectFromDatabase,
 } from "@database/connection";
-import threads from "@models/threads/threads";
+import users from "@models/users/users";
 import { currentUser } from "@clerk/nextjs";
 import { User } from "@clerk/nextjs/server";
+import { ConnectionStates } from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest, response: NextResponse) {
@@ -19,29 +20,23 @@ export async function POST(request: NextRequest, response: NextResponse) {
         { message: "Email Or Username Or Content is empty" },
         { status: 400 }
       );
-    await connectToDatabase();
-    const isUser = await threads.findOne({ email });
-    console.log(isUser);
-    if (!isUser) {
-      await threads.create({
-        username,
-        email,
-        threads: content,
-        imageLink: imageUrl,
-      });
-      disconnectFromDatabase();
-      return NextResponse.json(
-        { message: "New thread created." },
-        { status: 201 }
+    if (ConnectionStates.connected) {
+      await users.findOneAndUpdate(
+        { username },
+        { $push: { threads: content } }
       );
     } else {
-      await threads.updateOne({ email }, { $push: { threads: content } });
-      disconnectFromDatabase();
-      return NextResponse.json(
-        { message: "New thread Updated." },
-        { status: 201 }
+      await connectToDatabase();
+      await users.findOneAndUpdate(
+        { username },
+        { $push: { threads: content } }
       );
     }
+    disconnectFromDatabase();
+    return NextResponse.json(
+      { message: "New thread created." },
+      { status: 201 }
+    );
   } catch (error) {
     return NextResponse.json(
       { message: "Internal server error.", error },

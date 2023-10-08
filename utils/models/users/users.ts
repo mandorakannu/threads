@@ -1,6 +1,7 @@
+import { IUser } from "@ts/IUser";
 import mongoose, { Schema } from "mongoose";
 
-const userSchema = new Schema({
+const userSchema = new Schema<IUser>({
   firstName: {
     type: String,
     required: true,
@@ -20,6 +21,13 @@ const userSchema = new Schema({
   imageUrl: {
     type: String,
     required: true,
+  },
+  threads: {
+    type: [String],
+  },
+  date: {
+    type: Date,
+    default: Date.now,
   },
 });
 export default mongoose.models?.user || mongoose.model("user", userSchema);
