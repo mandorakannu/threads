@@ -14,7 +14,7 @@ export async function UserProfile({ user }: { user: User }) {
             alt=""
             width={80}
             height={80}
-            className="rounded-full w-20 h-20"
+            className="rounded-full w-10 h-10 sm:w-20 sm:h-20"
           />
         )}
         <div className="flex flex-col items-start">
