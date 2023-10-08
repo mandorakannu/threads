@@ -1,52 +1,31 @@
-import Link from "next/link";
-import Image from "next/image";
-import edit from "@images/edit.svg";
-import { currentUser } from "@clerk/nextjs";
-import type { User } from "@clerk/nextjs/api";
+import { cache } from "react";
 import { Metadata } from "next";
+import { User } from "@clerk/nextjs/server";
+import { currentUser } from "@clerk/nextjs";
+import { UserProfile } from "@pages/profile/UserProfile";
+import { ProfileTabs } from "@pages/profile/ProfileTabs";
+import UserThread from "@pages/profile/UserThreads";
 
 export const metadata: Metadata = {
-  title: "User profile | Threads | Kannu Mandora",
+  title: "User Profile Page | Threads | Kannu Mandora",
   description:
     "This is the user profile page. It shows the user's profile. This thread clone is made by Kannu Mandora. Kannu Mandora is a full stack developer.",
   keywords: "profile, user, clerk, nextjs, kannu, mandora",
 };
-// todo Create a bio field in Clerk. {Important}
 
-export default async function UserProfile() {
-  const user: User | null = await currentUser();
+export default async function UserProfileView() {
+  const getUser = cache(async () => {
+    return await currentUser();
+  });
+  const user: User | null = await getUser();
   return (
-    <>
-      {user?.id ? (
-        <div className="flex-row-between gap-5">
-          <section className="flex-row-center gap-5">
-            <Image
-              src={user.imageUrl}
-              alt=""
-              width={80}
-              height={80}
-              className="rounded-full w-20 h-20"
-            />
-            <div className="flex flex-col items-start">
-              <h1>
-                {user.firstName} {user.lastName}
-              </h1>
-              <h2 className="text-shade-100">@{user.username}</h2>
-              <p id="user_bio">{}</p>
-            </div>
-          </section>
-          <Link
-            href="/edit"
-            className="bg-secondary-100 hover:bg-secondary-300 px-6 py-2 flex-row-center gap-4 rounded"
-          >
-            <Image src={edit} alt="Edit Button" />
-            <span>Edit</span>
-          </Link>
-        </div>
-      ) : (
-        // todo Add a loading spinner Or a unauthorized message or unauthorized Component.
-        <></>
-      )}
-    </>
+    user?.id && (
+      <>
+        <UserProfile user={user} />
+        <hr className="my-6 border border-primary-500" />
+        <ProfileTabs />
+        <UserThread user={user} />
+      </>
+    )
   );
 }
