@@ -15,6 +15,7 @@ import { SignOutButton, SignedIn } from "@clerk/nextjs";
 import Image from "next/image";
 import { logout } from "@shared_ui/Images";
 import { useRouter } from "next/navigation";
+import { SignOut } from "@ui/SignOutButton";
 
 interface Props {
   isOpen: boolean;
@@ -38,7 +39,7 @@ export function DrawerNavigation({ isOpen, onOpen }: Props) {
         <DrawerContent className="bg-secondary-200 text-white">
           <DrawerCloseButton className="focus:border-none" />
           <DrawerHeader className="text-lg">
-            Threads | Kannu Mandora
+            Threads
           </DrawerHeader>
 
           <DrawerBody>
@@ -56,15 +57,7 @@ export function DrawerNavigation({ isOpen, onOpen }: Props) {
                   <hr />
                 </Fragment>
               ))}
-              <SignedIn>
-                <SignOutButton signOutCallback={() => router.push("/sign-in")}>
-                  <div className="flex cursor-pointer gap-4 p-4 my-4  bg-secondary-50 hover:bg-secondary-100 transition-colors delay-75 ease-in-out rounded">
-                    <Image src={logout} alt="logout" width={24} height={24} />
-
-                    <p>Log Out</p>
-                  </div>
-                </SignOutButton>
-              </SignedIn>
+              <SignOut />
             </ul>
           </DrawerBody>
 
