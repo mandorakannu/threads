@@ -3,14 +3,9 @@ import axios from "axios";
 import Link from "next/link";
 import Image from "next/image";
 import Loader from "@ui/Loader";
+import { IUser } from "@ts/IUser";
 import { search } from "@shared_ui/Images";
 import React, { useState, useRef } from "react";
-
-interface IUser {
-  _id: string;
-  username: string;
-  imageLink: string;
-}
 
 export default function Search() {
   const [getUser, setUser] = useState<null | IUser>(null);
@@ -21,10 +16,12 @@ export default function Search() {
   const searchUser = async () => {
     try {
       setLoader(true);
-      const user = searchUserRef.current?.value;
-      const getUser = await axios.get(`/api/searchUser/${user}`);
-      if (getUser.status === 200) {
-        setUser(getUser.data as IUser);
+      const rootUser = searchUserRef.current?.value;
+      if (rootUser === "") return setIsUser("Enter a username");
+      if (rootUser === getUser?.username) return;
+      const user = await axios.get(`/api/searchUser/${rootUser}`);
+      if (user.status === 200) {
+        setUser(user.data as IUser);
       } else {
         setIsUser("User not found");
       }
@@ -64,7 +61,7 @@ export default function Search() {
         </section>
         <section id="people_account">
           {loader ? (
-            <div className="grid place-items-center">
+            <div className="grid place-items-center my-10">
               <Loader />
             </div>
           ) : getUser ? (
@@ -76,9 +73,9 @@ export default function Search() {
                 <Image
                   width={40}
                   height={40}
-                  src={getUser.imageLink}
-                  className="w-10 h-10 object-cover rounded-full"
-                  alt={`${getUser.username} Profile Image`}
+                  src={getUser.imageUrl}
+                  className="w-10 h-10 rounded-full"
+                  alt={`${getUser.firstName.at(0)} ${getUser.lastName.at(0)}.`}
                 />
                 <span>{getUser.username}</span>
               </div>
