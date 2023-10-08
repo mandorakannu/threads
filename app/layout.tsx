@@ -5,6 +5,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { Providers as ChakraProvider } from "@ui/ChakraProvider";
 import { Navigation } from "@shared_ui/navigation/Navbar";
 import { Sidebar } from "@shared_ui/navigation/Sidebar";
+import { Analytics } from "@vercel/analytics/react";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -27,7 +28,10 @@ export default function RootLayout({
             <div className="flex flex-row">
               <Sidebar />
               <div className="flex min-h-screen flex-1 flex-col items-center pb-10 pt-28 max-md:pb-32 bg-secondary-200 text-white">
-                <div className="w-full max-w-7xl px-4">{children}</div>
+                <div className="w-full max-w-7xl px-4">
+                  {children}
+                  <Analytics />
+                </div>
               </div>
             </div>
           </ChakraProvider>
