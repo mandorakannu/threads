@@ -21,14 +21,13 @@ function About() {
   return (
     <>
       <section
-        className={`${font.className} flex-col-center justify-center gap-8 h-[70dvh]`}
+        className={`${font.className} flex-col-center justify-center gap-8 h-[70dvh] my-10`}
       >
         <Image
           src={url}
-          width={100}
-          height={20}
+          width={150}
+          height={150}
           alt="Kannu Mandora Profile Picture"
-          className="rounded-full w-32 h-32"
         />
         <h1 className="text-5xl">Hi!, I am Kannu Mandora</h1>
         <p>
