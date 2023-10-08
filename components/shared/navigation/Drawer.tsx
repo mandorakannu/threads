@@ -11,6 +11,10 @@ import Link from "next/link";
 import { useRef, Fragment } from "react";
 import links from "@jsons/navbar-links.json";
 import SocialIcons from "@ui/Social-Icons";
+import { SignOutButton, SignedIn } from "@clerk/nextjs";
+import Image from "next/image";
+import { logout } from "@shared_ui/Images";
+import { useRouter } from "next/navigation";
 
 interface Props {
   isOpen: boolean;
@@ -18,6 +22,7 @@ interface Props {
 }
 
 export function DrawerNavigation({ isOpen, onOpen }: Props) {
+  const router = useRouter();
   const btnRef = useRef<HTMLButtonElement>(null);
   const onClose = () => onOpen();
 
@@ -51,6 +56,15 @@ export function DrawerNavigation({ isOpen, onOpen }: Props) {
                   <hr />
                 </Fragment>
               ))}
+              <SignedIn>
+                <SignOutButton signOutCallback={() => router.push("/sign-in")}>
+                  <div className="flex cursor-pointer gap-4 p-4 my-4  bg-secondary-50 hover:bg-secondary-100 transition-colors delay-75 ease-in-out rounded">
+                    <Image src={logout} alt="logout" width={24} height={24} />
+
+                    <p>Log Out</p>
+                  </div>
+                </SignOutButton>
+              </SignedIn>
             </ul>
           </DrawerBody>
 
