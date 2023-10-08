@@ -22,7 +22,7 @@ export function ProfileTabs() {
   ];
   return (
     <>
-      <div className="flex-row-between w-full bg-secondary-300 px-8 py-4 rounded">
+      <div className="flex-row-between w-full bg-secondary-300 px-4 sm:px-8 py-4 rounded">
         {tabs.map(({ text, imageUrl, link }, index) => (
           <Link href={link} key={index} className="flex-row-center gap-2">
             <Image src={imageUrl} alt={imageUrl} />
