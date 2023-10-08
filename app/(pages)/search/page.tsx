@@ -53,7 +53,7 @@ export default function Search() {
           />
           <button
             type="button"
-            className="mx-2 bg-primary-500 px-5 py-3 rounded-md"
+            className="mx-2 bg-primary-500 px-5 py-3 rounded-md my-3 sm:my-0"
             onClick={searchUser}
           >
             Search
@@ -67,7 +67,7 @@ export default function Search() {
           ) : getUser ? (
             <div
               key={getUser._id}
-              className="flex-row-between gap-5 bg-secondary-100 py-5 px-6 rounded-md my-10 w-4/5"
+              className="flex-row-between gap-5 bg-secondary-100 py-5 px-6 rounded-md my-10 sm:w-4/5"
             >
               <div className="flex-row-center gap-4">
                 <Image
