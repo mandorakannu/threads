@@ -12,7 +12,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Threads - Next.js | Kannu Mandora | Full Stack Developer",
   description:
-    "This is a Next.js starter with TypeScript, Tailwind CSS, and ESLint and Hi, it's me Kannu Mandora. I want to be a Full Stack Developer. I am currently focused on my skills in React, Node, and Express.",
+    "This is thread web app with Next.js, TypeScript, Tailwind CSS, and ESLint. In this web app you can create threads and comment on them. You can also like and dislike the threads and comments. You can also delete the threads and comments. You can also edit the threads and comments. You can also search the threads and comments.",
   keywords: [
     "Kannu",
     "Kannu Mandora",
@@ -28,6 +28,18 @@ export const metadata: Metadata = {
     "web development",
     "software engineering",
     "programming languages",
+    "Threads",
+    "Threads App",
+    "Threads Web App",
+    "Threads Web Application",
+    "Threads Web Application with Next.js",
+    "Threads Web Application with Next.js and TypeScript",
+    "Threads Web Application with Next.js and TypeScript and Tailwind CSS",
+    "Threads Web Application with Next.js and TypeScript and Tailwind CSS and ESLint",
+    "Threads Web Application with Next.js and TypeScript and Tailwind CSS and ESLint and Jest",
+    "Threads Web Application with Next.js and TypeScript and Tailwind CSS and ESLint and Jest and React Testing Library",
+    "Threads Web Application with Next.js and TypeScript and Tailwind CSS and ESLint and Jest and React Testing Library and Storybook",
+    "Threads Web Application with Next.js and TypeScript and Tailwind CSS and ESLint and Jest and React Testing Library and Storybook and React Query",
   ],
   authors: [{ name: "Kannu Mandora" }],
   robots: {
@@ -48,7 +60,7 @@ export const metadata: Metadata = {
     url: "https://threads.mandorakannu.tech",
     title: "Threads | Kannu Mandora | Full Stack Developer",
     description:
-      "This is a Next.js starter with TypeScript, Tailwind CSS, and ESLint and Hi, it's me Kannu Mandora. I want to be a Full Stack Developer. I am currently focused on my skills in React, Node, and Express.",
+      "This is thread web app with Next.js, TypeScript, Tailwind CSS, and ESLint. In this web app you can create threads and comment on them. You can also like and dislike the threads and comments. You can also delete the threads and comments. You can also edit the threads and comments. You can also search the threads and comments.",
     images: [
       {
         url: "https://threads.mandorakannu.tech/main.jpg",
@@ -65,11 +77,12 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Threads | Kannu Mandora | Full Stack Developer",
     description:
-      "This is a Next.js starter with TypeScript, Tailwind CSS, and ESLint and Hi, it's me Kannu Mandora. I want to be a Full Stack Developer. I am currently focused on my skills in React, Node, and Express.",
+      "This is thread web app with Next.js, TypeScript, Tailwind CSS, and ESLint. In this web app you can create threads and comment on them. You can also like and dislike the threads and comments. You can also delete the threads and comments. You can also edit the threads and comments. You can also search the threads and comments.",
     siteId: "@mandorakannu",
     creator: "@KannuMandora",
     creatorId: "1467726470533754880",
     images: ["https://threads.mandorakannu.tech/main.jpg"],
+    site: "@mandorakannu",
   },
   verification: {
     google: "_RMbn1Udckop0qHdoAu_PoiGFWqwB19CecNEqZfHxAE",
@@ -87,6 +100,8 @@ export const metadata: Metadata = {
       url: "/favicon.ico",
     },
   ],
+  publisher: "Kannu Mandora",
+  generator: "Next.js",
 };
 
 export default function RootLayout({
