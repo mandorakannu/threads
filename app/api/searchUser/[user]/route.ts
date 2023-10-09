@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { ConnectionStates } from "mongoose";
+import { connection } from "mongoose";
 import users from "@models/users/users";
 import { connectToDatabase } from "@database/connection";
 export async function GET(
@@ -10,7 +10,7 @@ export async function GET(
   const { user: username } = context.params; //? Get the user from the url
   if (!username)
     return NextResponse.json({ error: "No user provided" }, { status: 400 });
-  if (ConnectionStates.connected) {
+  if (connection.readyState === 1) {
     return await getUser(username);
   } else {
     await connectToDatabase();
