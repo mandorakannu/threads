@@ -4,7 +4,7 @@ import { home, search, heart, user, create } from "@shared_ui/Images";
 import Image from "next/image";
 import sidebarLink from "@jsons/sidebar-links.json";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useProtectRoutes } from "@hooks/useProtectRoutes";
 import { useAuth } from "@clerk/nextjs";
 import { SignOut } from "@ui/SignOutButton";
@@ -13,12 +13,11 @@ function SidebarNavigation() {
   const pathname = usePathname();
   const protectRoutes = useProtectRoutes();
   const { userId } = useAuth();
-  const router = useRouter();
   return (
     <>
       {!protectRoutes.includes(pathname) && userId && (
-        <section className="sticky left-0 top-0 z-20 flex-col-between h-screen w-fit overflow-auto border-r pb-5 pt-28 max-md:hidden bg-secondary-300 text-white">
-          <aside className="flex w-full flex-1 flex-col gap-6 px-6">
+        <section className="fixed left-0 bottom-0 right-0 flex-row-even h-20 md:sticky md:left-0 md:top-0 z-20 md:flex-col-between md:h-screen md:w-fit  md:overflow-auto md:border-r md:pb-5 md:pt-28 bg-secondary-300 text-white">
+          <aside className="flex w-full flex-1 flex-row md:flex-col justify-evenly items-center md:justify-center md:items-stretch  gap-6 px-6">
             {sidebarLink.map(({ name, link, image }) => {
               const isActive =
                 (pathname.includes(link) && link.length > 1) ||
@@ -38,11 +37,11 @@ function SidebarNavigation() {
                     height={20}
                     alt={name}
                   />
-                  <p>{name}</p>
+                  <p className="hidden sm:block">{name}</p>
                 </Link>
               );
             })}
-            {userId && <SignOut />}
+            <div className="hidden sm:block">{userId && <SignOut />}</div>
           </aside>
         </section>
       )}
