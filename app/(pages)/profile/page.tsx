@@ -18,13 +18,14 @@ export default async function UserProfileView() {
     return await currentUser();
   });
   const user: User | null = await getUser();
+  const rootUser = JSON.parse(JSON.stringify(user));
   return (
     user?.id && (
       <>
-        <UserProfile user={user} />
+        <UserProfile user={rootUser} />
         <hr className="my-6 border border-primary-500" />
         <ProfileTabs />
-        <UserThread user={user} />
+        <UserThread user={rootUser} />
       </>
     )
   );
