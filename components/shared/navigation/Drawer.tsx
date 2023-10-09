@@ -36,7 +36,7 @@ export function DrawerNavigation({ isOpen, onOpen }: Props) {
         finalFocusRef={btnRef}
       >
         <DrawerOverlay />
-        <DrawerContent className="bg-secondary-200 text-white">
+        <DrawerContent backgroundColor={"#404258"} color={"white"} >
           <DrawerCloseButton className="focus:border-none" />
           <DrawerHeader className="text-lg">
             Threads
