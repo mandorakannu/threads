@@ -8,12 +8,14 @@ import type { User } from "@clerk/nextjs/api";
 
 export async function UserProfile({ user }: { user: User }) {
   const path = usePathname();
+  const fallbackImageUrl =
+    "https://gravatar.com/avatar/ff9812145c2821cdf7ac0401b3bb7381?s=400&d=robohash&r=x";
   return (
     <div className="flex-row-between gap-5">
       <section className="flex-row-center gap-5">
         {user.imageUrl && (
           <Image
-            src={user?.imageUrl as string}
+            src={user?.imageUrl || fallbackImageUrl}
             alt=""
             width={80}
             height={80}
@@ -27,13 +29,15 @@ export async function UserProfile({ user }: { user: User }) {
           <h2 className="text-shade-100">@{user?.username}</h2>
         </div>
       </section>
-      {path ==="/profile" && <Link
-        href="/edit"
-        className="bg-secondary-100 hover:bg-secondary-300 px-6 py-2 flex-row-center gap-4 rounded"
-      >
-        <Image src={edit} alt="Edit Button" />
-        <span>Edit</span>
-      </Link>}
+      {path === "/profile" && (
+        <Link
+          href="/edit"
+          className="bg-secondary-100 hover:bg-secondary-300 px-6 py-2 flex-row-center gap-4 rounded"
+        >
+          <Image src={edit} alt="Edit Button" />
+          <span>Edit</span>
+        </Link>
+      )}
     </div>
   );
 }

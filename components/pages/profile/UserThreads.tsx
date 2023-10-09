@@ -12,6 +12,7 @@ import {
 export const revalidate = 60;
 
 export default async function UserThread({ user }: { user?: User }) {
+  const fallbackImageUrl = process.env.FALLBACK_IMAGE_URL;
   const getThreads = cache(async () => {
     await connectToDatabase();
     if (!user) {
@@ -23,13 +24,13 @@ export default async function UserThread({ user }: { user?: User }) {
       }
     } else {
       try {
-        const getUser: IUser | null = await users.findOne({
-          username: user.username,
-        });
-        if (!getUser) return [];
-        return {
-          threads: getUser.threads,
-        };
+        const getUser = (await users
+          .findOne({
+            username: user.username,
+          })
+          .select("threads")) as Partial<IUser> | null;
+        if (!getUser) return null;
+        return getUser;
       } catch (error: unknown) {
         console.log(error);
         await disconnectFromDatabase();
@@ -43,13 +44,13 @@ export default async function UserThread({ user }: { user?: User }) {
         {user ? (
           <div className="h-1/2 overflow-y-scroll">
             {threads.threads !== undefined &&
-              threads?.threads.map((thread, index) => (
+              threads.threads.map((thread, index) => (
                 <div
                   key={index}
                   className="flex-row-center gap-5 bg-secondary-100 py-5 px-6 rounded-md my-10"
                 >
                   <Image
-                    src={user.imageUrl}
+                    src={user.imageUrl || (fallbackImageUrl as string)}
                     alt="User Image"
                     width={48}
                     height={48}
@@ -73,27 +74,27 @@ export default async function UserThread({ user }: { user?: User }) {
     const threads = (await getThreads()) as IUser[];
     return (
       <>
-        {threads[0].threads.length >= 1 &&
-          threads?.map((thread, index) => (
+        {threads?.map(({ threads, imageUrl, username }, index) => {
+          if (threads.length === 0) return <></>;
+          return (
             <div
               key={index}
               className="flex-row-center gap-5 bg-secondary-100 py-5 px-6 rounded-md my-10"
             >
               <Image
-                src={thread.imageUrl}
+                src={imageUrl}
                 alt="User Image"
                 width={48}
                 height={48}
                 className="w-12 h-12 rounded-full"
               />
               <div className="flex flex-col justify-start">
-                <Link href={`/user/${thread.username}`}>
-                  @{thread.username}
-                </Link>
-                <span className="text-sm">{thread.threads.at(-1)}</span>
+                <Link href={`/user/${username}`}>@{username}</Link>
+                <span className="text-sm">{threads.at(-1)}</span>
               </div>
             </div>
-          ))}
+          );
+        })}
       </>
     );
   }
