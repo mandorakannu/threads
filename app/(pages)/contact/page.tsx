@@ -1,84 +1,37 @@
 "use client";
-import { z } from "zod";
 import axios from "axios";
 import Link from "next/link";
 import Loader from "@ui/Loader";
-import React, { useState, useRef } from "react";
 import { AlertModel } from "@shared_ui/Model";
+import { addClient } from "@functions/contactForm";
+import React, { FormEvent, useState, useRef } from "react";
 
 function Contact() {
   const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const messageRef = useRef<HTMLTextAreaElement>(null);
+
   const [loading, setLoading] = useState<JSX.Element | string>("Send");
   const [alertMessage, setAlertMessage] = useState({
     title: "",
     description: "",
     isOpen: false,
   });
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const data = {
+    setLoading(<Loader />);
+    const res = await axios.post("/api/contact", {
       name: nameRef.current?.value,
       email: emailRef.current?.value,
       message: messageRef.current?.value,
-    };
-    const { name, email, message } = data;
-    if (!name || !email || !message)
-      return setAlertMessage({
-        title: "Please fill all the fields",
-        description: "",
-        isOpen: true,
-      });
-    const emailValidation = z.string().email();
-    try {
-      if (!emailValidation.parse(email)) {
-        return setAlertMessage({
-          title: "Please enter a valid email",
-          description: "",
-          isOpen: true,
-        });
-      } else {
-        setLoading(<Loader />);
-        const res = await axios.post("/api/contact", data);
-        if (res.status === 200) {
-          setAlertMessage({
-            title: "Message sent successfully",
-            description: "We will get back to you soon",
-            isOpen: true,
-          });
-        } else {
-          setAlertMessage({
-            title: "Something went wrong",
-            description: "Please try again later",
-            isOpen: true,
-          });
-        }
-      }
-    } catch (err) {
-      if (err instanceof z.ZodError) {
-        if (err.errors[0].message === "invalid email") {
-          return setAlertMessage({
-            title: "Please fill all the fields",
-            description: "",
-            isOpen: true,
-          });
-        }
-        setAlertMessage({
-          title: "Please enter a valid email",
-          description: "Oops! You missed something.",
-          isOpen: true,
-        });
-      } else {
-        setAlertMessage({
-          title: "Internal server error",
-          description: "Please try again later",
-          isOpen: true,
-        });
-      }
-    } finally {
-      setLoading("Send");
-    }
+    });
+    const data = await addClient(res.status);
+    setAlertMessage({
+      title: data.title,
+      description: data.description,
+      isOpen: data.isOpen,
+    });
+    setLoading("Send");
   };
   return (
     <>
@@ -121,6 +74,7 @@ function Contact() {
                     type="text"
                     name="name"
                     placeholder="Name"
+                    required
                     ref={nameRef}
                   />
                 </div>
@@ -131,6 +85,7 @@ function Contact() {
                     type="email"
                     name="email"
                     placeholder="Email address"
+                    required
                     ref={emailRef}
                   />
                 </div>
@@ -141,6 +96,7 @@ function Contact() {
                     rows={3}
                     name="message"
                     placeholder="Your message"
+                    required
                     ref={messageRef}
                   ></textarea>
                 </div>
