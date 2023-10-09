@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import React, { cache } from "react";
+import React, { Fragment, cache } from "react";
 import { IUser } from "@ts/IUser";
 import users from "@models/users/users";
 import { User } from "@clerk/nextjs/server";
@@ -74,25 +74,29 @@ export default async function UserThread({ user }: { user?: User }) {
     const threads = (await getThreads()) as IUser[];
     return (
       <>
-        {threads?.map(({ threads, imageUrl, username }, index) => {
+        {threads?.map(({ _id, threads, imageUrl, username }) => {
           if (threads.length === 0) return <></>;
           return (
-            <div
-              key={index}
-              className="flex-row-center gap-5 bg-secondary-100 py-5 px-6 rounded-md my-10"
-            >
-              <Image
-                src={imageUrl}
-                alt="User Image"
-                width={48}
-                height={48}
-                className="w-12 h-12 rounded-full"
-              />
-              <div className="flex flex-col justify-start">
-                <Link href={`/user/${username}`}>@{username}</Link>
-                <span className="text-sm">{threads.at(-1)}</span>
-              </div>
-            </div>
+            <Fragment key={_id + username}>
+              {threads.map((thread, index) => (
+                <div
+                  key={thread + _id + index}
+                  className="flex-row-center gap-5 bg-secondary-100 py-5 px-6 rounded-md my-10"
+                >
+                  <Image
+                    src={imageUrl || (fallbackImageUrl as string)}
+                    alt={username.charAt(0).toUpperCase()}
+                    width={48}
+                    height={48}
+                    className="w-12 h-12 rounded-full grid place-items-center bg-primary-500 text-white"
+                  />
+                  <div className="flex flex-col justify-start">
+                    <Link href={`/user/${username}`}>@{username}</Link>
+                    <span className="text-sm">{thread}</span>
+                  </div>
+                </div>
+              ))}
+            </Fragment>
           );
         })}
       </>
