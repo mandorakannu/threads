@@ -1,17 +1,92 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Progressbar } from "@ui/Progressbar";
 import { ClerkProvider } from "@clerk/nextjs";
-import { Providers as ChakraProvider } from "@ui/ChakraProvider";
-import { Navigation } from "@shared_ui/navigation/Navbar";
-import { Sidebar } from "@shared_ui/navigation/Sidebar";
 import { Analytics } from "@vercel/analytics/react";
+import { Sidebar } from "@shared_ui/navigation/Sidebar";
+import { Navigation } from "@shared_ui/navigation/Navbar";
+import { Providers as ChakraProvider } from "@ui/ChakraProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Threads - Next.js | Kannu Mandora | Full Stack Developer",
   description:
     "This is a Next.js starter with TypeScript, Tailwind CSS, and ESLint and Hi, it's me Kannu Mandora. I want to be a Full Stack Developer. I am currently focused on my skills in React, Node, and Express.",
+  keywords: [
+    "Kannu",
+    "Kannu Mandora",
+    "Mandora",
+    "Web Developer",
+    "Full Stack",
+    "MERN Stack",
+    "Stack",
+    "Full Stack Developer",
+    "Mandora Kannu",
+    "tech blogger",
+    "developer",
+    "web development",
+    "software engineering",
+    "programming languages",
+  ],
+  authors: [{ name: "Kannu Mandora" }],
+  robots: {
+    index: true,
+    follow: true,
+    nocache: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      noimageindex: false,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  openGraph: {
+    type: "website",
+    url: "https://threads.mandorakannu.tech",
+    title: "Threads | Kannu Mandora | Full Stack Developer",
+    description:
+      "This is a Next.js starter with TypeScript, Tailwind CSS, and ESLint and Hi, it's me Kannu Mandora. I want to be a Full Stack Developer. I am currently focused on my skills in React, Node, and Express.",
+    images: [
+      {
+        url: "https://threads.mandorakannu.tech/main.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Threads | Kannu Mandora | Full Stack Developer",
+      },
+    ],
+    siteName: "Threads | Kannu Mandora | Full Stack Developer",
+    countryName: "India",
+    emails: ["mandorakannu@gmail.com", "mandorakannu.dev@gmail.com"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Threads | Kannu Mandora | Full Stack Developer",
+    description:
+      "This is a Next.js starter with TypeScript, Tailwind CSS, and ESLint and Hi, it's me Kannu Mandora. I want to be a Full Stack Developer. I am currently focused on my skills in React, Node, and Express.",
+    siteId: "@mandorakannu",
+    creator: "@KannuMandora",
+    creatorId: "1467726470533754880",
+    images: ["https://threads.mandorakannu.tech/main.jpg"],
+  },
+  verification: {
+    google: "_RMbn1Udckop0qHdoAu_PoiGFWqwB19CecNEqZfHxAE",
+    yandex: "yandex",
+    yahoo: "yahoo",
+    other: {
+      me: ["mandorakannu@gmail.com"],
+    },
+  },
+  icons: [
+    {
+      href: "/favicon.ico",
+      rel: "icon",
+      type: "image/x-icon",
+      url: "/favicon.ico",
+    },
+  ],
 };
 
 export default function RootLayout({
@@ -23,6 +98,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={inter.className}>
+          <Progressbar />
           <ChakraProvider>
             <Navigation />
             <div className="flex flex-row">
