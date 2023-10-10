@@ -7,6 +7,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { Sidebar } from "@shared_ui/navigation/Sidebar";
 import { Navigation } from "@shared_ui/navigation/Navbar";
 import { Providers as ChakraProvider } from "@ui/ChakraProvider";
+import { ReduxProvider } from "@redux/Provider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -113,19 +114,21 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={inter.className}>
-          <Progressbar />
-          <ChakraProvider>
-            <Navigation />
-            <div className="flex flex-row">
-              <Sidebar />
-              <div className="flex min-h-screen flex-1 flex-col items-center pb-10 pt-28 max-md:pb-32 bg-secondary-200 text-white">
-                <div className="w-full max-w-7xl px-4">
-                  {children}
-                  <Analytics />
+          <ReduxProvider>
+            <Progressbar />
+            <ChakraProvider>
+              <Navigation />
+              <div className="flex flex-row">
+                <Sidebar />
+                <div className="flex min-h-screen flex-1 flex-col items-center pb-10 pt-28 max-md:pb-32 bg-secondary-200 text-white">
+                  <div className="w-full max-w-7xl px-4">
+                    {children}
+                    <Analytics />
+                  </div>
                 </div>
               </div>
-            </div>
-          </ChakraProvider>
+            </ChakraProvider>
+          </ReduxProvider>
         </body>
       </html>
     </ClerkProvider>

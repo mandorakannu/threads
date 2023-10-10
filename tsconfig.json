@@ -30,7 +30,7 @@
       "@jsons/*": ["./libs/jsons/*"],
       "@hooks/*": ["./libs/hooks/*"],
       "@ts/*": ["./libs/ts/*"],
-      "@store/*": ["./libs/store/store.ts"],
+      "@store": ["./libs/store/store.ts"],
       "@slices/*": ["./libs/store/slices/*"],
       "@database/*": ["./utils/database/*"],
       "@models/*": ["./utils/models/*"]
