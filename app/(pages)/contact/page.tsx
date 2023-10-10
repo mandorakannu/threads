@@ -3,14 +3,27 @@ import axios from "axios";
 import Link from "next/link";
 import Loader from "@ui/Loader";
 import { AlertModel } from "@shared_ui/Model";
-import { addClient } from "@functions/contactForm";
-import React, { FormEvent, useState, useRef } from "react";
+import { apiResponse } from "@functions/response";
+import React, { FormEvent, useState } from "react";
 
-function Contact() {
-  const nameRef = useRef<HTMLInputElement>(null);
-  const emailRef = useRef<HTMLInputElement>(null);
-  const messageRef = useRef<HTMLTextAreaElement>(null);
-
+export default function Contact() {
+  const inputTags = [
+    {
+      name: "name",
+      type: "text",
+      placeholder: "Name",
+    },
+    {
+      name: "email",
+      type: "email",
+      placeholder: "Email address",
+    },
+    {
+      name: "message",
+      type: "text",
+      placeholder: "Your message",
+    },
+  ];
   const [loading, setLoading] = useState<JSX.Element | string>("Send");
   const [alertMessage, setAlertMessage] = useState({
     title: "",
@@ -19,13 +32,15 @@ function Contact() {
   });
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const { name, email, message } = Object.fromEntries(formData);
     setLoading(<Loader />);
     const res = await axios.post("/api/contact", {
-      name: nameRef.current?.value,
-      email: emailRef.current?.value,
-      message: messageRef.current?.value,
+      name,
+      email,
+      message,
     });
-    const data = await addClient(res.status);
+    const data = await apiResponse(res.data.message, res.status);
     setAlertMessage({
       title: data.title,
       description: data.description,
@@ -67,43 +82,24 @@ function Contact() {
             </div>
             <div className="mb-12 w-full shrink-0 grow-0 basis-auto md:mb-0 md:w-6/12 md:px-3 lg:px-6">
               <form onSubmit={handleSubmit}>
-                <div className="mb-6 flex flex-col justify-start gap-2">
-                  <label htmlFor="name">Name</label>
-                  <input
-                    className="px-2 py-3 bg-secondary-50 rounded focus:bg-secondary-100 outline-none"
-                    type="text"
-                    name="name"
-                    placeholder="Name"
-                    required
-                    ref={nameRef}
-                  />
-                </div>
-                <div className="mb-6 flex flex-col justify-start gap-2">
-                  <label htmlFor="email">Email address</label>
-                  <input
-                    className="px-2 py-3 bg-secondary-50 rounded focus:bg-secondary-100 outline-none"
-                    type="email"
-                    name="email"
-                    placeholder="Email address"
-                    required
-                    ref={emailRef}
-                  />
-                </div>
-                <div className="mb-6 flex flex-col justify-start gap-2">
-                  <label htmlFor="message">Message</label>
-                  <textarea
-                    className="px-2 py-3 bg-secondary-50 rounded focus:bg-secondary-100 outline-none"
-                    rows={3}
-                    name="message"
-                    placeholder="Your message"
-                    required
-                    ref={messageRef}
-                  ></textarea>
-                </div>
-                <div className="mb-6 inline-block min-h-[1.5rem] justify-center pl-[1.5rem] md:flex"></div>
+                {inputTags.map(({ name, placeholder, type }) => (
+                  <div
+                    key={name}
+                    className="mb-6 flex flex-col justify-start gap-2"
+                  >
+                    <label htmlFor="name">{name}</label>
+                    <input
+                      className="px-2 py-3 bg-secondary-50 rounded focus:bg-secondary-100 outline-none"
+                      type={type}
+                      name={name}
+                      placeholder={placeholder}
+                      required
+                    />
+                  </div>
+                ))}
                 <button
                   type="submit"
-                  className="grid place-items-center mb-6 border w-full rounded px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-secondary-300  focus:bg-secondary-300 focus:outline-none focus:ring-0 active:bg-secondary-300 h-10"
+                  className="mt-10 grid place-items-center mb-6 border w-full rounded px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-secondary-300  focus:bg-secondary-300 focus:outline-none focus:ring-0 active:bg-secondary-300 h-10"
                 >
                   {loading}
                 </button>
@@ -115,5 +111,3 @@ function Contact() {
     </>
   );
 }
-
-export default Contact;
